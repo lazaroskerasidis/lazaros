@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>Ανακοινώσεις</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container" id="top">
+    <div class="header">
+        <h1>Ανακοινώσεις</h1>
+    </div>
+    
+    <div class="main-content">
+        <div class="sidebar">
+            <a href="index.html" class="menu-btn">Αρχική σελίδα</a>
+            <a href="announcement.html" class="menu-btn">Ανακοινώσεις</a>
+            <a href="communication.html" class="menu-btn">Επικοινωνία</a>
+            <a href="documents.html" class="menu-btn">Έγγραφα μαθήματος</a>
+            <a href="homework.html" class="menu-btn">Εργασίες</a>
+        </div>
+        
+        <div class="content">
+            <h2>Ανακοίνωση 1</h2>
+            <p><strong>Ημερομηνία:</strong> 12/12/2008</p>
+            <p><strong>Θέμα:</strong> Έναρξη μαθημάτων</p>
+            <p>Τα μαθήματα αρχίζουν την Δευτέρα 17/12/2008.</p>
+            
+            <h2>Ανακοίνωση 2</h2>
+            <p><strong>Ημερομηνία:</strong> 15/12/2008</p>
+            <p><strong>Θέμα:</strong> Ανάρτηση εργασίας</p>
+            <p>Η 1η εργασία έχει ανακοινωθεί στην ιστοσελίδα <a href="homework.html">«Εργασίες»</a>. Τα μαθήματα αρχίζουν την Δευτέρα 17/12/2008.</p>
+            
+            <a href="#top" class="top-link">&lt;top&gt;</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
