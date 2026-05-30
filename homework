@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>Εργασίες</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container" id="top">
+    <div class="header">
+        <h1>Εργασίες</h1>
+    </div>
+    
+    <div class="main-content">
+        <div class="sidebar">
+            <a href="index.html" class="menu-btn">Αρχική σελίδα</a>
+            <a href="announcement.html" class="menu-btn">Ανακοινώσεις</a>
+            <a href="communication.html" class="menu-btn">Επικοινωνία</a>
+            <a href="documents.html" class="menu-btn">Έγγραφα μαθήματος</a>
+            <a href="homework.html" class="menu-btn">Εργασίες</a>
+        </div>
+        
+        <div class="content">
+            <h2>Εργασία 1</h2>
+            <p><strong>Στόχοι:</strong> Οι στόχοι της εργασίας είναι:</p>
+            <ul>
+                <li>Κατανόηση της βασικής δομής HTML σελίδων</li>
+                <li>Διασύνδεση σελίδων μέσω υπερσυνδέσμων</li>
+            </ul>
+            <p><strong>Εκφώνηση:</strong></p>
+            <p><a href="ergasia1.doc" download>Κατεβάστε την εκφώνηση της εργασίας από εδώ</a></p>
+            <p><strong>Παραδοτέα:</strong></p>
+            <ul>
+                <li>Γραπτή αναφορά σε Word</li>
+                <li>Παρουσίαση σε PowerPoint</li>
+            </ul>
+            <p><strong>Ημερομηνία παράδοσης:</strong> 12/5/2009</p>
+            
+            <h2>Εργασία 2</h2>
+            <p><strong>Στόχοι:</strong> Οι στόχοι της εργασίας είναι:</p>
+            <ul>
+                <li>Χρήση CSS stylesheets για εξωτερική μορφοποίηση</li>
+                <li>Δημιουργία φορμών επικοινωνίας</li>
+            </ul>
+            <p><strong>Εκφώνηση:</strong></p>
+            <p><a href="ergasia2.doc" download>Κατεβάστε την εκφώνηση της εργασίας από εδώ</a></p>
+            <p><strong>Παραδοτέα:</strong></p>
+            <ul>
+                <li>Γραπτή αναφορά σε Word</li>
+                <li>Παρουσίαση σε PowerPoint</li>
+            </ul>
+            <p><strong>Ημερομηνία παράδοσης:</strong> 15/5/2009</p>
+            
+            <a href="#top" class="top-link">&lt;top&gt;</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
