@@ -1,241 +1,39 @@
+HTML
 <!DOCTYPE html>
-<html>
-
+<html lang="el">
 <head>
-
-<meta charset="UTF-8">
-    <?php
-    session_start();
-    if (!isset($_SESSION["username"])) {
-        header("Location: login.php");
-    }
-    ?>
-    <title>Αρχική σελίδα</title>
-
+    <meta charset="UTF-8">
+    <title>Έγγραφα μαθήματος</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+<body id="body-top">
 
-<body>
+    <div id="header">
+        <h1>Έγγραφα μαθήματος</h1>
+    </div>
 
-<div style="background-color:#443bec; color:white; padding:20px; border: 2px solid rgb(0, 0, 0); border-right: transparent;">
-    <?php
-    $servername = "webpagesdb.it.auth.gr:3306";
-    $Loginame = "kerasidis";
-    $Password = "kerasidis";
-    $dbname = "student3655partb";
+    <div class="main-container">
+        <div id="navigation">
+            <a href="index.html" class="nav-button">Αρχική σελίδα</a>
+            <a href="announcement.html" class="nav-button">Ανακοινώσεις</a>
+            <a href="communication.html" class="nav-button">Επικοινωνία</a>
+            <a href="documents.html" class="nav-button">Έγγραφα μαθήματος</a>
+            <a href="homework.html" class="nav-button">Εργασίες</a>
+        </div>
 
-    $conn = new mysqli($servername, $Loginame, $Password, $dbname);
+        <div id="content">
+            <h2>Τίτλος εγγράφου 1</h2>
+            <p><strong>Περιγραφή:</strong> Περιγραφή του περιεχομένου</p>
+            <p><a href="file1.doc">Download</a></p>
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+            <h2>Τίτλος εγγράφου 2</h2>
+            <p><strong>Περιγραφή:</strong> Περιγραφή του περιεχομένου</p>
+            <p><a href="file2.doc">Download</a></p>
 
-    $sql = "SELECT Name, Role FROM verifieduser WHERE Loginame = '" . $_SESSION["username"] . "'";
-
-    $result = $conn->query($sql);
-    $controlP = "";
-
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $welcomeMessage = "<div style='background-color:#443bec; color:white; padding: 15px; border: 2px solid rgb(0, 0, 0); position: absolute; top: 40px; right: 20px;'>" . "Συνδεδεμένος χρήστης: " . $row["Name"] . "<br>" . "Ιδιότητα: " . $row["Role"] . "</div>";
-
-            if ($row["Role"] == "Tutor") {
-                $controlP = "<div style='background-color:#ffffff; color:white; padding: 15px; border: 2px solid rgb(0, 0, 0); position: absolute; top: 40px; left: 20px;'>" . "<a href='control_panel.php'>Πίνακας ελέγχου</a>" . "</div>";
-            }
-        }
-    }
-    $conn->close();
-    ?>
-
-    <h1 align="center">Έγγραφα μαθήματος</h1>
-    <?php echo $welcomeMessage; ?>
-    <?php echo $controlP; ?>
-</div>
-
-<ul>
-
-<li><a href="index.php"><b>Αρχική σελίδα</b></a></li>
-<br><li><a href="announcements.php"><b>Ανακοινώσεις</b></a></li>
-<br><li><a href="communication.php"><b>Επικοινωνία</b></a></li>
-<br><li><a class="active" href="documents.php"><b>Έγγραφα μαθήματος</b></a></li>
-<br><li><a href="homework.php"><b>Εργασίες</b></a></li>
-
-    <img src="images/pic_mainpage.png" alt="MainPage" style="width: 40px;height: 40px; position: absolute; top: 12px; right: 2px;">
-    <img src="images/pic_announcement.png" alt="announcement" style="width: 40px;height: 40px; position: absolute; top: 102px; right: 2px;">
-    <img src="images/pic_email.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 188px; right: 2px;">
-    <img src="images/pic_documents.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 270px; right: 2px;">
-    <img src="images/pic_assignment.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 360px; right: 2px;">
-
-<style>
-    
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 220px;
-            background-color: #443bec;
-            position: absolute;
-            height: 100%;
-            overflow: auto;
-            border: 2px solid rgb(0, 0, 0);
-            border-top: transparent;
-        }
-    
-        li a {
-            display: block;
-            color: #000;
-            padding: 25px 25px;
-            text-decoration: blueviolet;
-        }
-    
-        li a.active {
-            background-color: #74ddbe;
-            color: white;
-        }
-    
-        li a:hover:not(.active) {
-            background-color: #555;
-            color: white;
-        }
-        
-</style>
-
-</ul>
-
-<div style="margin-left:250px; padding:1px 16px; height:1000px;">
-
-    <?php
-
-    $servername = "webpagesdb.it.auth.gr:3306";
-    $Loginame = "kerasidis";
-    $Password = "kerasidis";
-    $dbname = "student3655partb";
-
-    $conn = new mysqli($servername, $Loginame, $Password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "SELECT Role FROM verifieduser WHERE Loginame = '" . $_SESSION["username"] . "'";
-
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            if ($row["Role"] == "Tutor") {
-                echo "<form action='documents.php' method='post' enctype='multipart/form-data'>
-                <input type='text' name='document_Title' placeholder='Τίτλος έγγραφου'>
-                <input type='text' name='description' placeholder='Περιγραφή'>
-                <input type='file' name='document_place'>
-                <button type='submit' name='submit'>Ανέβασμα</button>
-                </form>";
-
-                if (isset($_POST['submit'])) {
-                    $document_Title = $_POST['document_Title'];
-                    $description = $_POST['description'];
-                    $document_place = $_FILES['document_place']['name'];
-
-                    $sql = "INSERT INTO document_handler (document_Title, description, document_place) VALUES ('$document_Title', '$description', '$document_place')";
-                    $result = $conn->query($sql);
-
-                    $target = "docs/".basename($_FILES['document_place']['name']);
-
-                    if (move_uploaded_file($_FILES['document_place']['tmp_name'], $target)) {
-                        $msg = "Το αρχείο ανέβηκε επιτυχώς";
-                    } else {
-                        $msg = "Πρόβλημα κατά την ανέβασμα του αρχείου.";
-                    }
-                }
-            }      
-
-            $sql = "SELECT * FROM document_handler, verifieduser WHERE verifieduser.Loginame = '" . $_SESSION["username"] . "'";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    echo "<hr>";
-                    echo "<h2>" . $row["document_Title"] . "</h2>";
-                    echo "<p> <b>Περιγραφή: </b> " . $row["description"] . "</p>";
-                    echo "<p> <a href='docs/" . $row["document_place"] . "' download>Κατεβάστε το αρχείο</a> </p>";
-
-                    if ($row["Role"] == "Tutor") {
-                        echo "<form action='documents.php' method='post'>
-                        <input type='hidden' name='document_Title' value='" . $row["document_Title"] . "'>
-                        <button type='submit' name='delete'>Διαγραφή</button>
-                        </form>";
-                    }
-
-                    if (isset($_POST['delete'])) {
-                        $document_Title = $_POST['document_Title'];
-
-                        $sql = "DELETE FROM document_handler WHERE document_Title = '$document_Title'";
-                        $result = $conn->query($sql);
-
-                        if ($result) {
-                            echo "<span style='color:green'>  <b>Το αρχείο διαγράφτηκε επιτυχώς."  . "</span></b>";
-                            header("Refresh:0");
-                        } else {
-                            echo "Πρόβλημα κατά την διαγραφή του αρχείου.";
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    ?>
-    <hr>
-    
-<style>
-    body {
-        background-color: #ffffff;
-        border-right: #000000 2px solid;
-        border-bottom: #000000 2px solid;
-    }
-
-    html {
-        overflow: hidden;
-    }
-</style>
-
-</div>
-
-<style>
-    body {
-        background-color: #ffffff;
-        border-right: #000000 2px solid;
-        border-bottom: #000000 2px solid;
-    }
-
-    html {
-        overflow: auto;
-    }
-</style>
-
-<div style="position: fixed; bottom: 0; right: 1%;">
-
-    <button style="background-color: #443bec; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-
-</div>
-
-<script>
-    const mybutton = document.getElementById("myBtn");
-
-    window.addEventListener("scroll", scrollFunction);
-
-    function topFunction() {
-        document.documentElement.scrollTop = 0; 
-    }
-
-    function scrollFunction() {
-        if (document.documentElement.scrollTop > 20) {
-            mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
-        }
-    }
-</script>
+            <br>
+            <a href="#body-top" class="top-link">&lt;top&gt;</a>
+        </div>
+    </div>
 
 </body>
-
 </html>
