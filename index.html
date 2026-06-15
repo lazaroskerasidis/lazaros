@@ -1,140 +1,32 @@
+HTML
 <!DOCTYPE html>
-<html>
-
+<html lang="el">
 <head>
-
-<meta charset="UTF-8">
-    <?php 
-    session_start();
-    if (!isset($_SESSION["username"])) {
-        header("Location: login.php");
-    }
-    ?>
-
+    <meta charset="UTF-8">
     <title>Αρχική σελίδα</title>
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<div style="background-color:#443bec; color:white; padding: 20px; border: 2px solid rgb(0, 0, 0); border-right: transparent;">
-    <?php
-    $servername = "webpagesdb.it.auth.gr:3306";
-    $Loginame = "kerasidis";
-    $Password = "kerasidis";
-    $dbname = "student3655partb";
 
-    $conn = new mysqli($servername, $Loginame, $Password, $dbname);
+    <div id="header">
+        <h1>Αρχική σελίδα</h1>
+    </div>
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    <div class="main-container">
+        <div id="navigation">
+            <a href="index.html" class="nav-button">Αρχική σελίδα</a>
+            <a href="announcement.html" class="nav-button">Ανακοινώσεις</a>
+            <a href="communication.html" class="nav-button">Επικοινωνία</a>
+            <a href="documents.html" class="nav-button">Έγγραφα μαθήματος</a>
+            <a href="homework.html" class="nav-button">Εργασίες</a>
+        </div>
 
-    $sql = "SELECT Name, Role FROM verifieduser WHERE Loginame = '" . $_SESSION["username"] . "'";
-
-    $result = $conn->query($sql);
-    $controlP = "";
-
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $welcomeMessage = "<div style='background-color:#443bec; color:white; padding: 15px; border: 2px solid rgb(0, 0, 0); position: absolute; top: 40px; right: 20px;'>" . "Συνδεδεμένος χρήστης: " . $row["Name"] . "<br>" . "Ιδιότητα: " . $row["Role"] . "</div>";
-
-            if ($row["Role"] == "Tutor") {
-                $controlP = "<div style='background-color:#ffffff; color:white; padding: 15px; border: 2px solid rgb(0, 0, 0); position: absolute; top: 40px; left: 20px;'>" . "<a href='control_panel.php'>Πίνακας ελέγχου</a>" . "</div>";
-            }
-        }
-    }
-    
-    $conn->close();
-    ?>
-    
-    <h1 align="center">Αρχική σελίδα </h1>
-    <?php echo $welcomeMessage; ?>
-    <?php echo $controlP; ?>
-</div>
-
-<ul>
-    <li><a class="active" href="index.php"><b>Αρχική σελίδα</b></a></li>
-    <br><li><a href="announcements.php"><b>Ανακοινώσεις</b></a></li>
-    <br><li><a href="communication.php"><b>Επικοινωνία</b></a></li>
-    <br><li><a href="documents.php"><b>Έγγραφα μαθήματος</b></a></li>
-    <br><li><a href="homework.php"><b>Εργασίες</b></a></li>
-	
-    <img src="images/pic_mainpage.png" alt="MainPage" style="width: 40px;height: 40px; position: absolute; top: 12px; right: 2px;">
-    <img src="images/pic_announcement.png" alt="announcement" style="width: 40px;height: 40px; position: absolute; top: 102px; right: 2px;">
-    <img src="images/pic_email.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 188px; right: 2px;">
-    <img src="images/pic_documents.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 270px; right: 2px;">
-    <img src="images/pic_assignment.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 360px; right: 2px;">
-</ul>
-
-
-<style>
-    
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 220px;
-            background-color: #443bec;
-            position: absolute;
-            height: 100%;
-            overflow: auto;
-            border: 2px solid rgb(0, 0, 0);
-            border-top: transparent;
-        }
-    
-        li a {
-            display: block;
-            color: #000;
-            padding: 25px 25px;
-            text-decoration: blueviolet;
-        }
-    
-        li a.active {
-            background-color: #74ddbe;
-            color: white;
-        }
-    
-        li a:hover:not(.active) {
-            background-color: #bac09f;
-            color: white;
-        }
-        
-</style>
-
-</ul>
-
-<div style="margin-left:25%;padding:1px 16px;height:1000px;">
-    <h2>Καλώς ήρθατε στην αρχική σελίδα του μαθήματος </h2>
-    <p>Σε αυτή σελίδα θα βρείτε όλα τα απαραίτητα όπως: 
-        <li style="margin-left: 40px;">τις ανακοινώσεις</li>
-        <li style="margin-left: 40px;">τα έγγραφα του μαθήματος</li>
-        <li style="margin-left: 40px;">τις εργασίες που υπάρχουν</li>
-        <li style="margin-left: 40px;">φόρμα επικοινωνίας με τους καθηγητές για ότιδήποτε χρειαστείτε</li>
-    </p>
-
-    <p>Εδω είναι η κεντρική σελίδα του ιστοτόπου. Στα αριστερά σας υπάρχει το navigation bar όπου διατηρούνται υπερσυνδέσμοι σε κάθε απαραίτητη σελίδα που θα χρειαστείτε ως μαθητές.</p>
-    <p>Όλα τα απαραίτητα αρχεία υπάρχουν σε υπερσυνδέσμους οι οποίοι θα σας τα κατεβάσουν μέσω του browser σας σε μορφή doc ή pdf.</p>
-    <p>Εάν έχετε οποιεσδήποτε ερωτήσεις σχετικά με τις εργασίες, τα μαθήματα ή τα έγγραφα, παρακαλώ επικοινωνήστε με τον αντίστοιχο διδάσκοντα.</p>
-
-    <h2 style="padding-top: 10px;">Οδηγός Πλοήγησης</h2>
-    <p>Το navigation bar στα αριστερά της σελίδας περιλαμβάνει τους υπερσυνδέσμους για τις ενότητες που υπάρχουν.</p>
-    <p>Κάνοντας κλικ σε κάθε υπερσύνδεσμο, θα μεταβείτε στην αντίστοιχη σελίδα.</p>
-
-    <img src="images/web.png" alt="WebTechnologies" style="width:1000px;height:420px; position: default; right: 1000px;">
-</div>
-
-<style>
-    body {
-        background-color: #ffffff;
-        border-right: #000000 2px solid;
-        border-bottom: #000000 2px solid;
-    }
-
-    html {
-        overflow: hidden;
-    }
-</style>
+        <div id="content">
+            <p>Καλωσόρισμα και εισαγωγικό κείμενο που θα περιγράφει τους στόχους (π.χ ιστοχώρος για εκμάθηση HΤΜL) και τις επιμέρους ιστοσελίδες του site (δηλ. τι περιέχεται στις ιστοσελίδες: Ανακοινώσεις, Επικοινωνία, Έγγραφα μαθήματος, Εργασίες).</p>
+            
+            <img src="https://picsum.photos/600/300" alt="Υπολογιστές και Κώδικας" style="max-width:100%; height:auto; margin-top:20px; border-radius:5px;">
+        </div>
+    </div>
 
 </body>
-
 </html>
