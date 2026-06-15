@@ -1,41 +1,240 @@
 <!DOCTYPE html>
-<html lang="el">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Ανακοινώσεις</title>
-    <link rel="stylesheet" href="style.css">
+
+<meta charset="UTF-8">
+    <?php 
+    session_start();
+    if (!isset($_SESSION["username"])) {
+        header("Location: login.php");
+    }
+    ?>
+    <title>Αρχική σελίδα</title> 
+
 </head>
+
 <body>
 
-<div class="container" id="top">
-    <div class="header">
-        <h1>Ανακοινώσεις</h1>
-    </div>
+<div style="background-color:#443bec; color:white; padding:20px; border: 2px solid rgb(0, 0, 0); border-right: transparent;">
+    <?php
+    $servername = "webpagesdb.it.auth.gr:3306";
+    $Loginame = "kerasidis";
+    $Password = "kerasidis";
+    $dbname = "student3655partb";
+
+    $conn = new mysqli($servername, $Loginame, $Password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT Name, Role FROM verifieduser WHERE Loginame = '" . $_SESSION["username"] . "'";
+
+    $result = $conn->query($sql);
+    $controlP = "";
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $welcomeMessage = "<div style='background-color:#443bec; color:white; padding: 15px; border: 2px solid rgb(0, 0, 0); position: absolute; top: 40px; right: 20px;'>" . "Συνδεδεμένος χρήστης: " . $row["Name"] . "<br>" . "Ιδιότητα: " . $row["Role"] . "</div>";
+
+            if ($row["Role"] == "Tutor") {
+                $controlP = "<div style='background-color:#ffffff; color:white; padding: 15px; border: 2px solid rgb(0, 0, 0); position: absolute; top: 40px; left: 20px;'>" . "<a href='control_panel.php'>Πίνακας ελέγχου</a>" . "</div>";
+            }
+        }
+    }
+    ?>
+
+    <h1 align="center">Ανακοινώσεις</h1>
+    <?php echo $welcomeMessage; ?>
+    <?php echo $controlP; ?>
+</div>
+
+<ul>
+
+<li><a href="index.php"><b>Αρχική σελίδα</b></a></li>
+<br><li><a class="active" href="announcements.php"><b>Ανακοινώσεις</b></a></li>
+<br><li><a href="communication.php"><b>Επικοινωνία</b></a></li>
+<br><li><a href="documents.php"><b>Έγγραφα μαθήματος</b></a></li>
+<br><li><a href="homework.php"><b>Εργασίες</b></a></li>
+
+    <img src="images/pic_mainpage.png" alt="MainPage" style="width: 40px;height: 40px; position: absolute; top: 12px; right: 2px;">
+    <img src="images/pic_announcement.png" alt="announcement" style="width: 40px;height: 40px; position: absolute; top: 102px; right: 2px;">
+    <img src="images/pic_email.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 188px; right: 2px;">
+    <img src="images/pic_documents.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 270px; right: 2px;">
+    <img src="images/pic_assignment.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 360px; right: 2px;">
+
+
+<style>
     
-    <div class="main-content">
-        <div class="sidebar">
-            <a href="index.html" class="menu-btn">Αρχική σελίδα</a>
-            <a href="announcement.html" class="menu-btn">Ανακοινώσεις</a>
-            <a href="communication.html" class="menu-btn">Επικοινωνία</a>
-            <a href="documents.html" class="menu-btn">Έγγραφα μαθήματος</a>
-            <a href="homework.html" class="menu-btn">Εργασίες</a>
-        </div>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 220px;
+            background-color: #443bec;
+            position: absolute;
+            height: 100%;
+            overflow: auto;
+            border: 2px solid rgb(0, 0, 0);
+            border-top: transparent;
+        }
+    
+        li a {
+            display: block;
+            color: #000;
+            padding: 25px 25px;
+            text-decoration: blueviolet;
+        }
+    
+        li a.active {
+            background-color: #74ddbe;
+            color: white;
+        }
+    
+        li a:hover:not(.active) {
+            background-color: #bac09f;
+            color: white;
+        }
         
-        <div class="content">
-            <h2>Ανακοίνωση 1</h2>
-            <p><strong>Ημερομηνία:</strong> 12/12/2008</p>
-            <p><strong>Θέμα:</strong> Έναρξη μαθημάτων</p>
-            <p>Τα μαθήματα αρχίζουν την Δευτέρα 17/12/2008.</p>
-            
-            <h2>Ανακοίνωση 2</h2>
-            <p><strong>Ημερομηνία:</strong> 15/12/2008</p>
-            <p><strong>Θέμα:</strong> Ανάρτηση εργασίας</p>
-            <p>Η 1η εργασία έχει ανακοινωθεί στην ιστοσελίδα <a href="homework.html">«Εργασίες»</a>. Τα μαθήματα αρχίζουν την Δευτέρα 17/12/2008.</p>
-            
-            <a href="#top" class="top-link">&lt;top&gt;</a>
-        </div>
-    </div>
+</style>
+
+</ul>
+
+<div style="margin-left:250px; padding:1px 16px; height:1000px;">
+
+    <?php 
+
+    $sql = "SELECT Role FROM verifieduser WHERE Loginame = '" . $_SESSION["username"] . "'";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            if ($row["Role"] == "Tutor") {
+                echo "<form action='announcements.php' method='post'>";
+                echo "<h2>Προσθήκη νέας ανακοίνωσης</h2>";
+                echo "<p>Ημερομηνία: <input type='date' name='date'></p>";
+                echo "<p>Θέμα: <input type='text' name='subject'></p>";
+                echo "<p>Κείμενο: <input type='text' name='main_text'></p>";
+                echo "<input type='submit' name='submit' value='Υποβολή'>";
+                echo "</form>";
+            }
+        }
+    }
+
+    if (isset($_POST["submit"])) {
+        $date = $_POST["date"];
+        $subject = $_POST["subject"];
+        $main_text = $_POST["main_text"];
+
+        $sql = "INSERT INTO announcements (date, subject, main_text) VALUES ('$date', '$subject', '$main_text')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Η ανακοίνωση προστέθηκε επιτυχώς!";
+        } else {
+            echo "Σφάλμα: " . $sql . "<br>" . $conn->error;
+        }
+    }
+
+    $sql = "SELECT * FROM announcements, verifieduser WHERE verifieduser.Loginame = '" . $_SESSION["username"] . "'";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "<h2>" . "Ανακοίνωση " . $row["auto_id"] . "</h2>";
+            echo "<p><b>Θέμα: </b>" . $row["subject"] . "<p>";
+            echo "<p><b>Ημερομηνία: </b>" . $row["date"] . "</p>";
+            echo "<p>" . $row["main_text"] . "</p>";
+            if ($row["Role"] == "Tutor") {
+                echo "<form action='announcements.php' method='post'>";
+                echo "<input type='hidden' name='auto_id' value='" . $row["auto_id"] . "'>";
+                echo "<input type='submit' name='delete' value='Διαγραφή'>";
+                echo "</form>";
+                
+                echo "<form action='announcements.php' method='post'>";
+                echo "<input type='hidden' name='auto_id' value='" . $row["auto_id"] . "'>";
+                echo "<input type='submit' name='edit' value='Επεξεργασία'>";
+                echo "</form>";
+            }
+
+            if (isset($_POST["delete"])) {
+                $sql = "DELETE FROM announcements WHERE auto_id = " . $_POST["auto_id"];
+                
+                if ($conn->query($sql)) {
+                    echo "Η ανακοίνωση διαγράφηκε επιτυχώς!";
+                    header("Refresh:0");
+                } else {
+                    echo "Σφάλμα: " . $sql . "<br>" . $conn->error;
+                }
+            }
+
+            if (isset($_POST["edit"])) {
+                echo "<form action='announcements.php' method='post'>";
+                echo "<input type='hidden' name='auto_id' value='" . $_POST["auto_id"] . "'>";
+                echo "<p>Ημερομηνία: <input type='date' name='date' value='" . $row["date"] . "'></p>";
+                echo "<p>Θέμα: <input type='text' name='subject' value='" . $row["subject"] . "'></p>";
+                echo "<p>Κείμενο: <input type='text' name='main_text' value='" . $row["main_text"] . "'></p>";
+                echo "<input type='submit' name='update' value='Ενημέρωση'>";
+                echo "</form>";
+            }
+
+            if (isset($_POST["update"])) {
+                $sql = "UPDATE announcements SET date = '" . $_POST["date"] . "', subject = '" . $_POST["subject"] . "', main_text = '" . $_POST["main_text"] . "' WHERE auto_id = " . $_POST["auto_id"];
+
+                if ($conn->query($sql)) {
+                    echo "Η ανακοίνωση ενημερώθηκε επιτυχώς!";
+                    header("Refresh:0");
+                } else {
+                    echo "Σφάλμα: " . $sql . "<br>" . $conn->error;
+                }
+            }
+        }
+    } else {
+        echo "Δεν υπάρχουν ανακοινώσεις";
+    }
+
+
+    ?>
+    
+
+<style>
+    body {
+        background-color: #ffffff;
+        border-right: #000000 2px solid;
+    }
+
+    html {
+        overflow: auto;
+    }
+    
+</style>
+
+<div style="position: fixed; bottom: 0; right: 1%;">
+
+    <button style="background-color: #443bec; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;" onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
 </div>
 
 </body>
+
+<script>
+    const mybutton = document.getElementById("myBtn");
+
+    window.addEventListener("scroll", scrollFunction);
+
+    function topFunction() {
+        document.documentElement.scrollTop = 0; 
+    }
+
+    function scrollFunction() {
+        if (document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+</script>
+
 </html>
