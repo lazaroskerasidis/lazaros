@@ -1,56 +1,190 @@
 <!DOCTYPE html>
-<html lang="el">
+<html>
+
 <head>
-    <meta charset="UTF-8">
+
+<meta charset="UTF-8">
+    <?php 
+    session_start();
+    if (!isset($_SESSION["username"])) {
+        header("Location: login.php");
+    }
+    ?>
     <title>Επικοινωνία</title>
-    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-<div class="container" id="top">
-    <div class="header">
-        <h1>Επικοινωνία</h1>
-    </div>
-    
-    <div class="main-content">
-        <div class="sidebar">
-            <a href="index.html" class="menu-btn">Αρχική σελίδα</a>
-            <a href="announcement.html" class="menu-btn">Ανακοινώσεις</a>
-            <a href="communication.html" class="menu-btn">Επικοινωνία</a>
-            <a href="documents.html" class="menu-btn">Έγγραφα μαθήματος</a>
-            <a href="homework.html" class="menu-btn">Εργασίες</a>
-        </div>
-        
-        <div class="content">
-            <p>Η συγκεκριμένη ιστοσελίδα θα παρέχει δύο δυνατότητες για την αποστολή e-mail στον καθηγητή:</p>
-            <ul>
-                <li>Μέσω web φόρμας</li>
-                <li>Με χρήση e-mail διεύθυνσης</li>
-            </ul>
-            
-            <h2>Αποστολή e-mail μέσω web φόρμας</h2>
-            <form action="#" method="post">
-                <div class="form-group">
-                    <label>Αποστολέας:</label>
-                    <input type="email" name="sender" placeholder="Η διεύθυνσή σας">
-                </div>
-                <div class="form-group">
-                    <label>Θέμα:</label>
-                    <input type="text" name="subject" placeholder="Το θέμα του μηνύματος">
-                </div>
-                <div class="form-group">
-                    <label>Κείμενο:</label>
-                    <textarea name="message" rows="5" placeholder="Γράψτε το μήνυμά σας..."></textarea>
-                </div>
-                <button type="submit" style="padding: 10px 20px; background-color: #2c3e50; color: white; border: none; border-radius: 4px; cursor: pointer;">Αποστολή</button>
-            </form>
-            
-            <h2>Αποστολή e-mail με χρήση e-mail διεύθυνσης</h2>
-            <p>Εναλλακτικά μπορείτε να αποστείλετε e-mail στην παρακάτω διεύθυνση ηλεκτρονικού ταχυδρομείου:</p>
-            <p><a href="mailto:tutor@csd.auth.test.gr">tutor@csd.auth.test.gr</a></p>
-        </div>
-    </div>
+<div style="background-color:#443bec; color:white; padding:20px; border: 2px solid rgb(0, 0, 0); border-right: transparent;">
+    <?php
+    $servername = "webpagesdb.it.auth.gr:3306";
+    $Loginame = "kerasidis";
+    $Password = "kerasidis";
+    $dbname = "student3655partb";
+
+    $conn = new mysqli($servername, $Loginame, $Password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "SELECT Name, Role FROM verifieduser WHERE Loginame = '" . $_SESSION["username"] . "'";
+
+    $result = $conn->query($sql);
+    $controlP = "";
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $welcomeMessage = "<div style='background-color:#443bec; color:white; padding: 15px; border: 2px solid rgb(0, 0, 0); position: absolute; top: 40px; right: 20px;'>" . "Συνδεδεμένος χρήστης: " . $row["Name"] . "<br>" . "Ιδιότητα: " . $row["Role"] . "</div>";
+
+            if ($row["Role"] == "Tutor") {
+                $controlP = "<div style='background-color:#ffffff; color:white; padding: 15px; border: 2px solid rgb(0, 0, 0); position: absolute; top: 40px; left: 20px;'>" . "<a href='control_panel.php'>Πίνακας ελέγχου</a>" . "</div>";
+            }
+        }
+    }
+    $conn->close();
+    ?>
+
+    <h1 align="center">Επικοινωνία</h1>
+    <?php echo $welcomeMessage; ?>
+    <?php echo $controlP; ?>
 </div>
 
+
+<ul>
+<li><a href="index.php"><b>Αρχική σελίδα</b></a></li>
+<br><li><a href="announcements.php"><b>Ανακοινώσεις</b></a></li>
+<br><li><a class="active" href="communication.php"><b>Επικοινωνία</b></a></li>
+<br><li><a href="documents.php"><b>Έγγραφα μαθήματος</b></a></li>
+<br><li><a href="homework.php"><b>Εργασίες</b></a></li>
+
+    <img src="images/pic_mainpage.png" alt="MainPage" style="width: 40px;height: 40px; position: absolute; top: 12px; right: 2px;">
+    <img src="images/pic_announcement.png" alt="announcement" style="width: 40px;height: 40px; position: absolute; top: 102px; right: 2px;">
+    <img src="images/pic_email.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 188px; right: 2px;">
+    <img src="images/pic_documents.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 270px; right: 2px;">
+    <img src="images/pic_assignment.png" alt="email" style="width: 40px;height: 40px; position: absolute; top: 360px; right: 2px;">
+
+
+<style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 220px;
+            background-color: #443bec;
+            position: absolute;
+            height: 100%;
+            overflow: auto;
+            border: 2px solid rgb(0, 0, 0);
+            border-top: transparent;
+        }
+    
+        li a {
+            display: block;
+            color: #000;
+            padding: 25px 25px;
+            text-decoration: blueviolet;
+        }
+    
+        li a:hover:not(.active) {
+            background-color: #bac09f;
+            color: white;
+        }
+
+        li a.active {
+            background-color: #74ddbe;
+            color: white;
+        }
+        
+</style>
+
+</ul>
+
+<div style="margin-left:25%;padding:1px 16px;height:1000px;">
+
+    <h2>Πληροφορίες σχετικά με την επικοινωνία με τον διδάσκοντα</h2>
+
+    <p>Για επικοινωνία με τον καθηγητή σας, χρησιμοποιείστε μια απο τις 2 παρακάτω επιλογφές που παρέχονται.</p>
+
+    <p>Σιγουρευτείτε ότι:</p>
+    <ol>
+        <li>Το email του διδάσκοντα είναι σωστό αλλίως το μήνυμα σας δε θα παραληφθεί. </li>
+        <li>Έχετε δηλώσει σχετικό θέμα με το κείμενο που θα αποστείλετε. </li>
+    </ol>
+
+    <h2>Αποστολή μέσω web φόρμας</h2>
+
+    <form action="communication.php" method="post">
+        <label for="sender">Αποστολέας:</label>
+        <input type="text" id="sender" name="sender" value="<?php echo $_SESSION["username"]; ?>" readonly><br><br>
+        <label for="subject">Θέμα:</label>
+        <input type="text" id="subject" name="subject"><br><br>
+        <label for="text">Κείμενο:</label> <br><br>
+        <textarea id="text" name="text" rows="10" cols="60"></textarea><br><br>
+        <input type="submit" value="Αποστολή" name="submit">
+    </form>
+
+    <?php
+    if (isset($_POST['submit'])) {
+        $sender = $_POST['sender'];
+        $subject = $_POST['subject'];
+        $text = $_POST['text'];
+
+        $conn = mysqli_connect("localhost", "root", "", "student3861partb");
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT * FROM verifieduser WHERE role='Tutor'";
+        $result = $conn->query($sql);
+
+        if (empty($sender) || empty($subject) || empty($text)) {
+            echo "Παρακαλώ συμπληρώστε όλα τα πεδία";
+        } else {
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $to = $row["Loginame"];
+                    $headers = "From: " . $sender;
+                    mail($to, $subject, $text, $headers);
+                }
+            }
+        }
+
+        $conn->close();
+
+        echo "Το μήνυμα σας απεστάλη με επιτυχία";
+    }
+    ?>
+
+    <h2>Αποστολή e-mail με χρήση e-mail διεύθυνσης</h2>
+
+    <p>Εναλλακτικά μπορείτε να αποστείλετε e-mail στην παρακάτω διεύθυνση ηλεκτρονικού ταχυδρομείου: </p>
+
+    <a href="mailto:">tutor2024@csd.auth.test.gr</a> 
+
+</div>
+
+<script>
+    const mybutton = document.getElementById("myBtn");
+
+    window.addEventListener("scroll", scrollFunction);
+
+    function topFunction() {
+        document.documentElement.scrollTop = 0; 
+    }
+
+    function scrollFunction() {
+        if (document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+</script>
+
 </body>
+
 </html>
